@@ -11,7 +11,6 @@ class AuthService{
         }
 
         const valid_pass = await bcrypt.compareSync(password,userData.password);
-        console.log(valid_pass);
         if(!valid_pass){
             throw new Unauthorized("Неверный логин или пароль");
         }
