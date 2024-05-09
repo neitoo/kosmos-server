@@ -17,6 +17,60 @@ class DataRepository{
 
         return response.rows[0];
     }
+
+    static async getInfoUser(id){
+        const response = await pool.query("SELECT * FROM Users WHERE id=$1", [id]);
+
+        return response.rows[0];
+    }
+
+    static async createTask({title,description,created_at,updated_at,priority,status,creator,assignee}){
+        const response = await pool.query("INSERT INTO Tasks (title,description,due_date,created_at,updated_at,priority,status,creator,assignee) VALUES ($1,$2,NULL,$3,$4,$5,$6,$7,$8) RETURNING *;",
+        [title,description,created_at,updated_at,priority,status,creator,assignee]);
+
+        return response.rows[0];
+    }
+
+    static async getTaskById(id) {
+        const query = `SELECT * FROM Tasks WHERE id=$1`;
+    
+        const response = await pool.query(query, [id]);
+    
+        if (response.rows.length > 0) {
+            return response.rows[0];
+        } else {
+            return null;
+        }
+    }
+
+    static async getAllTasks(){
+        const query = `
+                SELECT
+                t.id,
+                t.title,
+                t.description,
+                t.due_date,
+                t.created_at,
+                t.updated_at,
+                p.name AS priority_name,
+                s.name AS status_name,
+                CONCAT(u1.last_name, ' ', u1.first_name, ' ', u1.patronymic) AS creator_name,
+                CONCAT(u2.last_name, ' ', u2.first_name, ' ', u2.patronymic) AS assignee_name
+            FROM Tasks t
+            JOIN Priorities p ON t.priority = p.id
+            JOIN Statuses s ON t.status = s.id
+            JOIN Users u1 ON t.creator = u1.id
+            JOIN Users u2 ON t.assignee = u2.id;
+        `;
+    
+        const response = await pool.query(query);
+    
+        if (response.rows.length > 0) {
+            return response.rows;
+        } else {
+            return null;
+        }
+    }
 }
 
 export default DataRepository;
