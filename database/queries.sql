@@ -4,7 +4,7 @@ CREATE TABLE Tasks (
     id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
     title VARCHAR(100) NOT NULL,
     description VARCHAR(1000) NOT NULL,
-    due_date TIMESTAMP,
+    due_date TIMESTAMP NOT NULL,
     created_at TIMESTAMP NOT NULL,
     updated_at TIMESTAMP NOT NULL,
     priority INT NOT NULL REFERENCES Priorities(id),
