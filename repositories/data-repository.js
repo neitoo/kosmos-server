@@ -24,6 +24,14 @@ class DataRepository{
         return response.rows[0];
     }
 
+    static async getUsers(){
+        const response = await pool.query(
+            "SELECT id, CONCAT(last_name, ' ', first_name, ' ', patronymic) AS fullname, login, director_id FROM Users"
+        );
+
+        return response.rows;
+    }
+
     static async createTask({title,description,created_at,updated_at,priority,status,creator,assignee}){
         const response = await pool.query("INSERT INTO Tasks (title,description,due_date,created_at,updated_at,priority,status,creator,assignee) VALUES ($1,$2,NULL,$3,$4,$5,$6,$7,$8) RETURNING *;",
         [title,description,created_at,updated_at,priority,status,creator,assignee]);
@@ -33,14 +41,27 @@ class DataRepository{
 
     static async getTaskById(id) {
         const query = `SELECT * FROM Tasks WHERE id=$1`;
-    
+
         const response = await pool.query(query, [id]);
     
-        if (response.rows.length > 0) {
-            return response.rows[0];
-        } else {
-            return null;
-        }
+        return response.rows[0];
+    }
+
+    static async updateTaskById({id, description, due_date, updated_at, priority, status, assignee}) {
+        const query = `
+            UPDATE Tasks
+            SET description = $2,
+                due_date = $3,
+                updated_at = $4,
+                priority = $5,
+                status = $6,
+                assignee = $7
+            WHERE id = $1
+        `;
+    
+        const response = await pool.query(query, [id, description, due_date, updated_at, priority, status, assignee]);
+    
+        return response;
     }
 
     static async getAllTasks(){
