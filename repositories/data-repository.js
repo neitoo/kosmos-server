@@ -32,9 +32,9 @@ class DataRepository{
         return response.rows;
     }
 
-    static async createTask({title,description,created_at,updated_at,priority,status,creator,assignee}){
-        const response = await pool.query("INSERT INTO Tasks (title,description,due_date,created_at,updated_at,priority,status,creator,assignee) VALUES ($1,$2,NULL,$3,$4,$5,$6,$7,$8) RETURNING *;",
-        [title,description,created_at,updated_at,priority,status,creator,assignee]);
+    static async createTask({title,description,due_date, created_at,updated_at,priority,status,creator,assignee}){
+        const response = await pool.query("INSERT INTO Tasks (title,description,due_date,created_at,updated_at,priority,status,creator,assignee) VALUES ($1,$2,$3,$4,$5,$6,$7,$8, $9) RETURNING *;",
+        [title,description, due_date,created_at,updated_at,priority,status,creator,assignee]);
 
         return response.rows[0];
     }
