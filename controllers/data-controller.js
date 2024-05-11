@@ -27,13 +27,13 @@ class DataController{
     }
 
     static async setTasks(req,res){
-        const {title,description,priority,status,creator,assignee} = req.body;
+        const {title,description,due_date,priority,status,creator,assignee} = req.body;
 
         try {
             const date = new Date().toISOString();
             let [created_at, updated_at] = [date,date];
 
-            const data = await DataRepository.createTask({title,description,created_at, updated_at, priority,status,creator,assignee});
+            const data = await DataRepository.createTask({title,description, due_date,created_at, updated_at, priority,status,creator,assignee});
 
             const {id} = data;
 
