@@ -1,5 +1,6 @@
 import DataRepository from "../repositories/data-repository.js";
 import bcrypt from "bcrypt";
+import { Conflict, NotFound, Unauthorized } from "../utils/Errors.js";
 
 class AuthService{
     static async signIn({login,password}){
@@ -7,7 +8,7 @@ class AuthService{
         
     
         if(!userData){
-            throw new Conflict("Пользователь не найден");
+            throw new NotFound("Пользователь не найден");
         }
 
         const valid_pass = await bcrypt.compareSync(password,userData.password);
