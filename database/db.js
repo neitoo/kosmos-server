@@ -3,12 +3,12 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
+const connectionString = `postgres://${process.env.USER_DB}:${process.env.PASSWORD_DB}@${process.env.HOST_DB}:${process.env.PORT_DB}/${process.env.NAME_DB}`
 const pool = new pg.Pool({
-    user: process.env.USER_DB,
-    password: process.env.PASSWORD_DB,
-    host: process.env.HOST_DB,
-    port: process.env.PORT_DB,
-    database: process.env.NAME_DB
+    connectionString: connectionString,
+    ssl: {
+        rejectUnauthorized: false
+    }
 });
 
 export default pool;
