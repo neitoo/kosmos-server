@@ -15,6 +15,13 @@
    ```powershell
    npm install
    ```
+
+   Создайте файл ```.env``` и поместите следующий код:
+   ```env
+   PORT=5000
+   DATABASE_URL=http://localhost:5432
+   CLIENT_URL=http://localhost:3000
+   ```
 2. Создайте базу данных в PostgreSQL и выполните скрипт из файла:
     ```database/queries.sql```
     
