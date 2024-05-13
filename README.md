@@ -19,7 +19,6 @@
    Создайте файл ```.env``` и поместите следующий код:
    ```env
    PORT=5000
-   DATABASE_URL=http://localhost:5432
    CLIENT_URL=http://localhost:3000
    
    USER_DB=название юзера постгрес
