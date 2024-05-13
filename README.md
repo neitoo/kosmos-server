@@ -18,15 +18,15 @@
 
    Создайте файл ```.env``` и поместите следующий код:
    ```env
-    PORT=5000
-    DATABASE_URL=http://localhost:5432
-    CLIENT_URL=http://localhost:3000
-
-    USER_DB=название юзера постгрес
-    PASSWORD_DB=пароль для подключения к бд
-    HOST_DB=localhost
-    PORT_DB=5432
-    NAME_DB=название бд
+   PORT=5000
+   DATABASE_URL=http://localhost:5432
+   CLIENT_URL=http://localhost:3000
+   
+   USER_DB=название юзера постгрес
+   PASSWORD_DB=пароль для подключения к бд
+   HOST_DB=localhost
+   PORT_DB=5432
+   NAME_DB=название бд
    ```
 2. Создайте базу данных в PostgreSQL и выполните скрипт из файла:
     ```database/queries.sql```
